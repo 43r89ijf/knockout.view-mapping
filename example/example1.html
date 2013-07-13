@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Knockout View Mapping plugin Example1</title>
+<style type="text/css">
+</style>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/knockout/2.3.0/knockout-min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.3.5/knockout.mapping.js"></script>
+<script type="text/javascript" src="../knockout.view-mapping.js"></script>
+</head>
+<body>
+
+<h1>Knockout View Mapping plugin Example1</h1>
+
+<div id="contents">
+    <p>Address1: <span data-bind="text: Address1"></span></p>
+    <p>Address2: <span data-bind="text: Address2"></span></p>
+    <p>Address3: <span data-bind="text: Address3"></span></p>
+    <p>Address4: <span data-bind="text: Address4"></span></p>
+    <p>Address5: <span data-bind="text: Address5"></span></p>
+</div>
+
+<script type="text/javascript">
+
+    var ViewModel = function() {
+        this.Address1 = ko.observable("Earth");
+        /* No longer needed
+        this.Address2 = ko.observable();
+        this.Address3 = ko.observable();
+        this.Address4 = ko.observable();
+        this.Address5 = ko.observable();
+        */
+    };
+
+    var initData = { "Address2":"Moon", "Address3":"Mars" };
+
+    $(function () {
+        var vm = new ViewModel();
+        vm = ko.viewMapping.execute("contents", vm, initData);
+        // vm = ko.viewMapping.execute("contents", vm); // This is OK.
+        // vm = ko.viewMapping.execute("contents"); // This is OK.
+        // vm = ko.viewMapping.execute(); // This is OK.
+        ko.applyBindings(vm);
+    });
+
+</script>
+</body>
+</html>
