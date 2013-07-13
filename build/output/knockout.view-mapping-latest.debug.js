@@ -1,4 +1,4 @@
-/// Knockout MappingEx plugin v0.1
+/// Knockout View Mapping plugin v0.1
 /// (c) 2013 43r89ijf - https://github.com/43r89ijf
 /// License: MIT (http://www.opensource.org/licenses/mit-license.php)
 (function (factory) {
@@ -20,9 +20,9 @@
 
     function viewToViewModel(obj, vm) {
         if (!obj) return vm;
-        var str = obj.innerHTML;
+        var strHtml = obj.innerHTML;
         var mchArray, bindType, bindName;
-        while ((mchArray = bindRe.exec(str)) != null) {
+        while ((mchArray = bindRe.exec(strHtml)) != null) {
             bindType = mchArray[1];
             bindName = mchArray[2];
             if ("undefined" == typeof vm[bindName]) {
