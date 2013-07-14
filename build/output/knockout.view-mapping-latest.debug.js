@@ -39,13 +39,21 @@
     exports.execute = function (id, vm, data) {
         if (!vm) vm = {};
         // Add property from DOM.
-        var obj = (id) ? document.getElementById(id) : document.body;
+        var obj;
+        if (id) {
+            obj = document.getElementById(id);
+            if (!obj) throw new Error("DOM Element (id='" + id + "') is undefined.");
+        } else {
+            obj = document.body;
+        }
         vm = viewToViewModel(obj, vm);
         // Add property from template.
         var strHtml = obj.innerHTML;
-        var mchArray;
+        var mchArray, tpltObj;
         while ((mchArray = tpltRe.exec(strHtml)) != null) {
-            vm = viewToViewModel(document.getElementById(mchArray[1]), vm);
+            tpltObj = document.getElementById(mchArray[1]);
+            if (!tpltObj) throw new Error("Template (id='" + mchArray[1] + "') is undefined.");
+            vm = viewToViewModel(tpltObj, vm);
         }
         // Set data from JS object.
         vm = ko.mapping.fromJS(data, {}, vm);
