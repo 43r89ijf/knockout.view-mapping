@@ -7,9 +7,9 @@ It is not supported when nested by the "foreach".
 
 ## Dependencies
 
-・[jQuery](http://jquery.com/)   
-・[Knockout](http://knockoutjs.com/)   
-・[knockout.mapping](http://knockoutjs.com/documentation/plugins-mapping.html)   
+ * [Knockout](http://knockoutjs.com/)   
+ * [knockout.mapping](http://knockoutjs.com/documentation/plugins-mapping.html)   
+ * (if IE7 or earlier)  [json2](https://github.com/douglascrockford/JSON-js/)    
 
 ## Example
 
