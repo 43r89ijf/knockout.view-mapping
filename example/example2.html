@@ -50,13 +50,23 @@
         var templateFile = "./template/template2.html";
         var templateDataFile = "./template/template2_data.txt";
         var bindDivId = "contents";
-        $.getJSON(templateDataFile, function (data) {
-            $.get(templateFile, function (template) {
-                $("body").append(template);
-                var vm = new ViewModel();
-                vm = ko.viewMapping.execute(bindDivId, vm, data);
-                vm = editViewModel(vm);
-                ko.applyBindings(vm);
+        $.get(templateFile, function (template) {
+            $("body").append(template);
+            var vm = new ViewModel();
+            $.ajax({
+                url: templateDataFile,
+                dataType: "json",
+                success: function(data) {
+                    vm = ko.viewMapping.execute(bindDivId, vm, data);
+                },
+                error: function(data) {
+                    alert("error!! Get '" + templateDataFile + "' failed.");
+                    vm = ko.viewMapping.execute(bindDivId, vm);
+                },
+                complete: function(data) {
+                    vm = editViewModel(vm);
+                    ko.applyBindings(vm);
+                }
             });
         });
     });
