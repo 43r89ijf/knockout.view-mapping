@@ -37,7 +37,7 @@ JavaScript
 
 	var initData = { "Address2":"Moon", "Address3":"Mars" };
 
-	$(function () {
+	$(function () { // if not jQuery "window.onload = function() { ... }"
         var vm = new ViewModel();
         vm = ko.viewMapping.execute("contents", vm, initData);
         // vm = ko.viewMapping.execute("contents", vm); // This is OK.
@@ -45,6 +45,8 @@ JavaScript
         // vm = ko.viewMapping.execute(); // This is OK.
         ko.applyBindings(vm);
 	});
+
+[JSFiddle Example](http://jsfiddle.net/Huhvk/2/)
 
 ## License
 
