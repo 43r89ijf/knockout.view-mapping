@@ -12,23 +12,36 @@
     }
 }(function (ko, exports) {
 
-    var bindRe = new RegExp(/ data-bind\s*=\s*\".*(text|value|checked)\s*\:\s*([^\"\,\s]+)\s*[\"\,]/g);
-    var tpltRe = new RegExp(/ data-bind\s*=\s*\".*template\s*\:\s*\{\s*name\s*\:\s*\'([^\']+)\'/g);
+    var bindTextRe = new RegExp(/\s+data-bind\s*=\s*\"([^\"]+)\s*\"/g);
+    var bindPropRe = new RegExp(/(text|value|checked|options|selectedOptions)\s*\:\s*(\w+)/);
+    var tpltRe = new RegExp(/\s+data-bind\s*=\s*\".*template\s*\:\s*\{\s*name\s*\:\s*\'([^\']+)\'/g);
+    var fmtRe = new RegExp(/([\r\n]|<!--[\s\S]*?-->)/g);
 
     function viewToViewModel(obj, vm) {
         if (!obj) return vm;
-        var strHtml = obj.innerHTML;
-        var mchArray, bindType, bindName;
-        while ((mchArray = bindRe.exec(strHtml)) != null) {
-            bindType = mchArray[1];
-            bindName = mchArray[2];
-            if ("undefined" == typeof vm[bindName]) {
-                if (bindType == "checked") {
-                    vm[bindName] = ko.observable(false);
-                } else {
-                    vm[bindName] = ko.observable();
+        var strHtml = obj.innerHTML.replace(fmtRe, ' ');
+        var mchText, bindText, mchProp, bintProps, bindType, bindName;
+        while ((mchText = bindTextRe.exec(strHtml)) != null) {
+            bindText = mchText[1];
+            bintProps = bindText.split(",");
+            ko.utils.arrayForEach(bintProps, function(prop) {
+                mchProp = bindPropRe.exec(prop);
+                if (mchProp) {
+                    bindType = mchProp[1];
+                    bindName = mchProp[2];
+                    if ("undefined" == typeof vm[bindName]) {
+                        if (bindType == "text" || bindType == "value") {
+                            vm[bindName] = ko.observable();
+                        } else if (bindType == "checked") {
+                            vm[bindName] = ko.observable(false);
+                        } else if (bindType == "options") {
+                            vm[bindName] = [];
+                        } else if (bindType == "selectedOptions") {
+                            vm[bindName] = ko.observable([]);
+                        }
+                    }
                 }
-            }
+            });
         }
         return vm;
     }
@@ -39,13 +52,13 @@
         var obj;
         if (id) {
             obj = document.getElementById(id);
-            if (!obj) throw new Error("DOM Element (id='" + id + "') is undefined.");
+            if (!obj) throw new Error("DOM element (id='" + id + "') is undefined.");
         } else {
-            obj = document.body;
+           throw new Error("DOM element id is empty.");
         }
         vm = viewToViewModel(obj, vm);
         // Add property from template.
-        var strHtml = obj.innerHTML;
+        var strHtml = obj.innerHTML.replace(fmtRe, ' ');
         var mchArray, tpltObj;
         while ((mchArray = tpltRe.exec(strHtml)) != null) {
             tpltObj = document.getElementById(mchArray[1]);
