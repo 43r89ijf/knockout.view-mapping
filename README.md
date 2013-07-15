@@ -69,7 +69,7 @@ JavaScript
 	    ko.applyBindings(vm);
 	});
 
-[JSFiddle Example](http://jsfiddle.net/Huhvk/4/)
+[JSFiddle Example](http://jsfiddle.net/Huhvk/5/)
 
 ## License
 
