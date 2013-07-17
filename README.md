@@ -3,7 +3,7 @@ Knockout View Mapping plugin
 
 View mapping plugin for [Knockout](http://knockoutjs.com/).   
 This plugin add property to view model from view (HTML DOM Elements).   
-It is not supported when nested by the "foreach".   
+It is not supported when nested by "foreach" or "with".   
 
 ## Dependencies
 
@@ -43,7 +43,7 @@ JavaScript
 	    this.Address1 = ko.observable("Earth");
 	    /* No longer needed
 	    this.Address2 = ko.observable();
-	    this.Address3 = ko.observable();
+	    this.Address3 = ko.observable("Mars");
 	    this.Address4 = ko.observable();
 	    this.Address5 = ko.observable();
 	    this.stringValue = ko.observable("Hello!");
