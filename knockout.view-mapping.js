@@ -13,7 +13,7 @@
 }(function (ko, exports) {
 
     var bindTextRe = new RegExp(/\s+data-bind\s*=\s*\"([^\"]+)\s*\"/g);
-    var bindPropRe = new RegExp(/(text|value|checked|options|selectedOptions)\s*\:\s*(\w+)/);
+    var bindPropRe = new RegExp(/(text|value|checked|options|selectedOptions)\s*\:\s*([\w\$]+)/);
     var tpltRe = new RegExp(/\s+data-bind\s*=\s*\".*template\s*\:\s*\{\s*name\s*\:\s*\'([^\']+)\'/g);
     var fmtRe = new RegExp(/([\r\n]|<!--[\s\S]*?-->)/g);
 
