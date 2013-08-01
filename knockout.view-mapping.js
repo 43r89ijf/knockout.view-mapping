@@ -31,9 +31,9 @@
                     bindName = mchProp[2];
                     if ("undefined" == typeof vm[bindName]) {
                         if (bindType == "text" || bindType == "value") {
-                            vm[bindName] = ko.observable("");
+                            vm[bindName] = ko.observable();
                         } else if (bindType == "checked") {
-                            vm[bindName] = ko.observable(false);
+                            vm[bindName] = ko.observable();
                         } else if (bindType == "options") {
                             vm[bindName] = [];
                         } else if (bindType == "selectedOptions") {
