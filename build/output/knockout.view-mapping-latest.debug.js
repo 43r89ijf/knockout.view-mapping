@@ -1,5 +1,5 @@
 /// Knockout View Mapping plugin v0.2
-/// (c) 2013 43r89ijf - https://github.com/43r89ijf
+/// (c) 2013 43r89ijf - https://github.com/43r89ijf/knockout.view-mapping
 /// License: MIT (http://www.opensource.org/licenses/mit-license.php)
 (function (factory) {
     // Module systems magic dance.
@@ -68,8 +68,10 @@
             if (!tpltObj) throw new Error("Template (id='" + mchArray[1] + "') is undefined.");
             vm = viewToViewModel(tpltObj, vm);
         }
+        // Set default mapping.
+        vm = ko.mapping.fromJS(ko.mapping.toJS(vm), {}, vm);
         // Set data from JS object.
-        vm = ko.mapping.fromJS(data, {}, vm);
+        if (data) vm = ko.mapping.fromJS(data, {}, vm);
         return vm;
     };
 

@@ -65,8 +65,10 @@
             if (!tpltObj) throw new Error("Template (id='" + mchArray[1] + "') is undefined.");
             vm = viewToViewModel(tpltObj, vm);
         }
+        // Set default mapping.
+        vm = ko.mapping.fromJS(ko.mapping.toJS(vm), {}, vm);
         // Set data from JS object.
-        vm = ko.mapping.fromJS(data, {}, vm);
+        if (data) vm = ko.mapping.fromJS(data, {}, vm);
         return vm;
     };
 
